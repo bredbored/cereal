@@ -134,7 +134,12 @@ namespace cereal
       // typedefs for parent type and storage type
       using BaseType = typename ::cereal::traits::get_shared_from_this_base<T>::type;
       using ParentType = std::enable_shared_from_this<BaseType>;
+#ifdef CEREAL_HAS_CPP23
+      // C++23 deprecates aligned_storage
+      using StorageType = union { alignas(CEREAL_ALIGNOF(ParentType)) char bytes[sizeof(ParentType)]; };
+#else
       using StorageType = typename std::aligned_storage<sizeof(ParentType), CEREAL_ALIGNOF(ParentType)>::type;
+#endif
 
       public:
         //! Saves the state of some type inheriting from enable_shared_from_this
@@ -286,7 +291,12 @@ namespace cereal
     {
       // Storage type for the pointer - since we can't default construct this type,
       // we'll allocate it using std::aligned_storage and use a custom deleter
+#ifdef CEREAL_HAS_CPP23
+      // C++23 deprecates aligned_storage
+      using AlignedStorage = union { alignas(CEREAL_ALIGNOF(T)) char bytes[sizeof(T)]; };
+#else
       using AlignedStorage = typename std::aligned_storage<sizeof(T), CEREAL_ALIGNOF(T)>::type;
+#endif
 
       // Valid flag - set to true once construction finishes
       //  This prevents us from calling the destructor on
@@ -377,7 +387,12 @@ namespace cereal
       using NonConstT = typename std::remove_const<T>::type;
       // Storage type for the pointer - since we can't default construct this type,
       // we'll allocate it using std::aligned_storage
+#ifdef CEREAL_HAS_CPP23
+      // C++23 deprecates aligned_storage
+      using AlignedStorage = union { alignas(CEREAL_ALIGNOF(NonConstT)) char bytes[sizeof(NonConstT)]; };
+#else
       using AlignedStorage = typename std::aligned_storage<sizeof(NonConstT), CEREAL_ALIGNOF(NonConstT)>::type;
+#endif
 
       // Allocate storage - note the AlignedStorage type so that deleter is correct if
       //                    an exception is thrown before we are initialized

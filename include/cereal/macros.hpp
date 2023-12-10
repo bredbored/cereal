@@ -133,6 +133,18 @@
 #endif // ifndef CEREAL_NOEXCEPT
 
 // ######################################################################
+//! Checks if C++23 is available
+#if (__cplusplus >= 202302L || (defined(_MSVC_LANG) && _MSVC_LANG > 202002L))
+#define CEREAL_HAS_CPP23
+#endif
+
+// ######################################################################
+//! Checks if C++20 is available
+#if (__cplusplus >= 202002L || (defined(_MSVC_LANG) && _MSVC_LANG >= 202002L))
+#define CEREAL_HAS_CPP20
+#endif
+
+// ######################################################################
 //! Checks if C++17 is available
 //! NOTE: clang v5 has a bug with inline variables, so disable C++17 on that compiler
 #if (__cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >= 201703L)) \
