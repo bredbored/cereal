@@ -748,11 +748,11 @@ namespace cereal
       #if defined(_MSC_VER) && !defined(__INTEL_COMPILER)
       //! Creates the appropriate bindings depending on whether the archive supports
       //! saving or loading
-      virtual CEREAL_DLL_EXPORT void instantiate() CEREAL_USED;
+      virtual void instantiate() CEREAL_USED;
       #else // NOT _MSC_VER
       //! Creates the appropriate bindings depending on whether the archive supports
       //! saving or loading
-      static CEREAL_DLL_EXPORT void instantiate() CEREAL_USED;
+      static void instantiate() CEREAL_USED;
       //! This typedef causes the compiler to instantiate this static function
       typedef instantiate_function<instantiate> unused;
       #endif // _MSC_VER
@@ -760,7 +760,7 @@ namespace cereal
 
     // instantiate implementation
     template <class Archive, class T>
-    CEREAL_DLL_EXPORT void polymorphic_serialization_support<Archive,T>::instantiate()
+    void polymorphic_serialization_support<Archive,T>::instantiate()
     {
       create_bindings<Archive,T>::save( std::integral_constant<bool,
                                           std::is_base_of<detail::OutputArchiveBase, Archive>::value &&

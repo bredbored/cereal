@@ -155,7 +155,7 @@
 #define CEREAL_REGISTER_DYNAMIC_INIT(LibName)                \
   namespace cereal {                                         \
   namespace detail {                                         \
-    void CEREAL_DLL_EXPORT dynamic_init_dummy_##LibName() {} \
+    void dynamic_init_dummy_##LibName() {}                   \
   } } /* end namespaces */
 
 //! Forces dynamic initialization of polymorphic support in a
@@ -168,7 +168,7 @@
 #define CEREAL_FORCE_DYNAMIC_INIT(LibName)                 \
   namespace cereal {                                       \
   namespace detail {                                       \
-    void CEREAL_DLL_EXPORT dynamic_init_dummy_##LibName(); \
+    void dynamic_init_dummy_##LibName();                   \
   } /* end detail */                                       \
   } /* end cereal */                                       \
   namespace {                                              \
