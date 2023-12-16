@@ -136,7 +136,7 @@ namespace cereal
       using ParentType = std::enable_shared_from_this<BaseType>;
 #ifdef CEREAL_HAS_CPP23
       // C++23 deprecates aligned_storage
-      using StorageType = union { alignas(CEREAL_ALIGNOF(ParentType)) char bytes[sizeof(ParentType)]; };
+      using StorageType = union { alignas(CEREAL_ALIGNOF(ParentType)) char storage[sizeof(ParentType)]; };
 #else
       using StorageType = typename std::aligned_storage<sizeof(ParentType), CEREAL_ALIGNOF(ParentType)>::type;
 #endif
@@ -293,7 +293,7 @@ namespace cereal
       // we'll allocate it using std::aligned_storage and use a custom deleter
 #ifdef CEREAL_HAS_CPP23
       // C++23 deprecates aligned_storage
-      using AlignedStorage = union { alignas(CEREAL_ALIGNOF(T)) char bytes[sizeof(T)]; };
+      using AlignedStorage = union { alignas(CEREAL_ALIGNOF(T)) char storage[sizeof(T)]; };
 #else
       using AlignedStorage = typename std::aligned_storage<sizeof(T), CEREAL_ALIGNOF(T)>::type;
 #endif
@@ -389,7 +389,7 @@ namespace cereal
       // we'll allocate it using std::aligned_storage
 #ifdef CEREAL_HAS_CPP23
       // C++23 deprecates aligned_storage
-      using AlignedStorage = union { alignas(CEREAL_ALIGNOF(NonConstT)) char bytes[sizeof(NonConstT)]; };
+      using AlignedStorage = union { alignas(CEREAL_ALIGNOF(NonConstT)) char storage[sizeof(NonConstT)]; };
 #else
       using AlignedStorage = typename std::aligned_storage<sizeof(NonConstT), CEREAL_ALIGNOF(NonConstT)>::type;
 #endif
